@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>test popup</title>
+    <style type="text/css">
+        body {
+            margin: 10px;
+            padding: 0px;
+            width: 250px;
+            font-family: "Helvetica Neue", "Calibri", Serif;
+            font-size: 1em;
+        }
+        span {
+            display: inline-block;
+            margin-top: 5px;
+            width: 100px;
+        }
+        #mockclientid, #mockserver {
+            width: 135px
+        }
+    </style>
+</head>
+<body>
+
+<div>
+    <input type="checkbox" id="mockenabled">
+    <label for="mockenabled">mock enabled</label>
+</div>
+<div>
+    <span>mock clientid</span>
+    <input type="text" id="mockclientid" disabled>
+</div>
+<div>
+    <span>mock server</span>
+    <input type="text" id="mockserver" disabled>
+</div>
+<script type="text/javascript" src="./popup.js"></script>
+
+</body>
+</html>

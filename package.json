@@ -5,7 +5,7 @@
   "browser": "./dist/parrot.js",
   "main": "./src/server.js",
   "scripts": {
-    "build": "webpack",
+    "build": "sh build.sh",
     "prepublish": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,6 +19,7 @@
   "author": "Xianming Zhong",
   "license": "MIT",
   "devDependencies": {
+    "raw-loader": "^0.5.1",
     "webpack": "^1.13.1"
   },
   "dependencies": {

@@ -1,0 +1,29 @@
+{   
+    "manifest_version": 2,
+    "name": "ParrotMocker",
+    "version": "1.0.0",
+    "description": "Intercept h5/node.js requests and mock reponses",
+    "icons": {
+        "64": "img/icon-active-64.png"
+    },
+    "browser_action": {
+        "default_title": "ParrotMocker",
+        "default_icon": "img/icon-active-64.png",
+        "default_popup": "popup.html"
+    },
+    "content_scripts": [{
+        "matches": ["http://*/*", "https://*/*"],
+        "js": ["build/content.js"],
+        "run_at": "document_start",
+        "all_frames": true
+    }],
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": false
+    },
+    "permissions": [
+        "tabs",
+        "https://*/*",
+        "http://*/*"
+    ]
+}
