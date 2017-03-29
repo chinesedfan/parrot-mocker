@@ -1,7 +1,7 @@
-(function(self) {
+exports.init = function(self) {
   'use strict';
 
-  if (self.fetch) {
+  if (self.fetch && self.fetch.polyfill) {
     return
   }
 
@@ -430,4 +430,4 @@
     })
   }
   self.fetch.polyfill = true
-})(typeof self !== 'undefined' ? self : this);
+};
