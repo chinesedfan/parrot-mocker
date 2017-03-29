@@ -2,8 +2,11 @@
   "name": "parrot-mocker",
   "version": "1.0.0",
   "description": "Intercept requests to the mock server",
+  "browser": "./dist/parrot.js",
   "main": "./src/server.js",
   "scripts": {
+    "build": "webpack",
+    "prepublish": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -14,5 +17,11 @@
     "fetch"
   ],
   "author": "Xianming Zhong",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^1.13.1"
+  },
+  "dependencies": {
+    "url": "^0.11.0"
+  }
 }
