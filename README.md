@@ -4,6 +4,12 @@ This package supports to intercept XHR/JSONP/Fetch requests and forward to the s
 
 ## How to use
 
+### Chrome plugin
+
+Sorry for that I don't have a Google developer account to publish the plugin. But you can load the plugin by following Google's [development guide](https://developer.chrome.com/extensions/getstarted#unpacked). The plugin folder is `crx`, or use the packed .crx file from [releases](https://github.com/chinesedfan/parrot-mocker/releases).
+
+If the plugin is disabled by Chrome, you can install it again.
+
 ### Standalone
 
 ```js
@@ -21,12 +27,6 @@ module.exports = {
     entry: ['parrot-mocker', './yours/src/entry.js']  
 };
 ```
-
-### Chrome plugin
-
-Sorry for that I don't have a Google developer account to publish the plugin. But you can load the plugin by following Google's [development guide](https://developer.chrome.com/extensions/getstarted#unpacked). The plugin folder is `crx`.
-
-If the plugin is disabled by Chrome, you can install it again.
 
 ### Node.js
 
