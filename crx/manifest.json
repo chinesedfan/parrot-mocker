@@ -1,7 +1,7 @@
 {   
     "manifest_version": 2,
     "name": "ParrotMocker",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Intercept h5/node.js requests and mock reponses",
     "icons": {
         "64": "img/icon-active-64.png"
