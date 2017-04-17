@@ -22,6 +22,7 @@
         "persistent": false
     },
     "permissions": [
+        "cookies",
         "tabs",
         "https://*/*",
         "http://*/*"

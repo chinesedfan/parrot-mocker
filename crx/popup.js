@@ -21,12 +21,29 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         eleBtn.addEventListener('click', function() {
-            if (!eleInput.value) return;
-            status.server = eleInput.value;
-            status.enabled = !status.enabled;
+            if (status.enabled) {
+                status.enabled = false;
+                chrome.tabs.sendMessage(tabs[0].id, status);
+                updateStatus();
+                return;
+            }
 
-            chrome.tabs.sendMessage(tabs[0].id, status);
-            updateStatus();
+            chrome.cookies.get({
+                url: eleInput.value,
+                name: '__mock_clientid'
+            }, function(cookie) {
+                if (chrome.runtime.lastError || !cookie) {
+                    eleMsg.innerHTML = 'No client id is found!';
+                    return;
+                }
+
+                status.server = eleInput.value;
+                status.clientid = cookie.value;
+                status.enabled = !status.enabled;
+
+                chrome.tabs.sendMessage(tabs[0].id, status);
+                updateStatus();
+            });
         });
 
         function updateStatus() {
