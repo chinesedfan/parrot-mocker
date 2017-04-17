@@ -1,24 +1,74 @@
 document.addEventListener('DOMContentLoaded', function() {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        var eleInput = document.getElementById('mockserver');
+        var eleMsg = document.getElementsByClassName('msg')[0];
+        var eleBtn = document.getElementsByClassName('btn')[0];
+
+        var status = {
+            event: 'mode-change',
+            enabled: false,
+            clientid: '',
+            server: ''
+        };
+
         chrome.tabs.sendMessage(tabs[0].id, {event: 'query-status'}, function(res) {
-            document.getElementById('mockenabled').checked = res.enabled;
-            document.getElementById('mockclientid').value = res.clientid || '';
-            document.getElementById('mockserver').value = decodeURIComponent(res.server) || '';
+            if (!res) return;
+            status.enabled = res.enabled;
+            status.clientid = res.clientid || '';
+            status.server = decodeURIComponent(res.server) || '';
 
-            if (res.debug) {
-                document.getElementById('mockclientid').removeAttribute('disabled');
-                document.getElementById('mockserver').removeAttribute('disabled');
-            }
+            updateStatus();
         });
-        document.addEventListener('change', function() {
-            var data = {
-                event: 'mode-change',
-                enabled: document.getElementById('mockenabled').checked,
-                clientid: document.getElementById('mockclientid').value,
-                server: document.getElementById('mockserver').value
-            };
 
-            chrome.tabs.sendMessage(tabs[0].id, data);
+        eleBtn.addEventListener('click', function() {
+            if (!eleInput.value) return;
+            status.server = eleInput.value;
+            status.enabled = !status.enabled;
+
+            chrome.tabs.sendMessage(tabs[0].id, status);
+            updateStatus();
         });
+
+        function updateStatus() {
+            updateEleInput(eleInput, status);
+            updateEleMsg(eleMsg, status);
+            updateEleBtn(eleBtn, status);
+        }
     });
 });
+
+function updateEleInput(eleInput, status) {
+    eleInput.value = status.server;
+
+    if (status.enabled) {
+        eleInput.setAttribute('disabled', 'true');
+    } else {
+        eleInput.removeAttribute('disabled');
+    }
+}
+function updateEleMsg(eleMsg, status) {
+    var msg;
+    if (status.enabled) {
+        if (status.clientid) {
+            msg = 'Hi, ' + status.clientid + ', I\'m mocking!';
+        } else {
+            msg = 'Invalid! Mocking without client id!';
+        }
+    } else {
+        if (status.clientid) {
+            msg = 'Hi, ' + status.clientid + ', I\'m ready!';
+        } else {
+            msg = 'Hmm...';
+        }
+    }
+    eleMsg.innerHTML = msg;
+}
+function updateEleBtn(eleBtn, status) {
+    if (status.enabled) {
+        eleBtn.innerHTML = 'Click to Stop';
+        eleBtn.className = 'btn stop';
+    } else {
+        eleBtn.innerHTML = 'Click to Mock';
+        eleBtn.className = 'btn';
+    }
+}

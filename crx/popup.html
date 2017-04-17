@@ -30,7 +30,8 @@
         }
 
         .bottom {
-            margin-top: 5px;
+            margin-top: 10px;
+            height: 28px;
         }
         .msg {
             font-size: 14px;
@@ -39,17 +40,27 @@
             color: #666;
         }
         .btn {
+            width: 100px;
             padding: 5px;
             float: right;
+            font-size: 14px;
+            line-height: 18px;
+            text-align: center;
             background-color: green;
             color: #fff;
+        }
+        .btn.stop {
+            background-color: red;
+        }
+        .btn.loading {
+            background-color: gray;
         }
     </style>
 </head>
 <body>
 
-<div><span class="label">Mock Server:</span><input id="mockserver" type="text" value="https://parrotmocker.leanapp.cn"></div>
-<div class="bottom"><span class="msg">Hi, abcdefgh, I'm ready!</span><span class="btn">Click to Mock</span></div>
+<div><span class="label">Mock Server:</span><input id="mockserver" type="text"></div>
+<div class="bottom"><span class="msg">Hmm...</span><span class="btn">Click to Mock</span></div>
 <script type="text/javascript" src="./popup.js"></script>
 
 </body>
