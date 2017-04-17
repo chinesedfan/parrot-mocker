@@ -26,6 +26,8 @@ module.exports = {
 
 Sorry for that I don't have a Google developer account to publish the plugin. But you can load the plugin by following Google's [development guide](https://developer.chrome.com/extensions/getstarted#unpacked). The plugin folder is `crx`.
 
+If the plugin is disabled by Chrome, you can install it again.
+
 ### Node.js
 
 We export a function to rewrite the request url.
