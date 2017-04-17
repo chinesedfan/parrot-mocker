@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!res) return;
             status.enabled = res.enabled;
             status.clientid = res.clientid || '';
-            status.server = decodeURIComponent(res.server) || '';
+            status.server = decodeURIComponent(res.server || '');
 
             updateStatus();
         });
