@@ -1,39 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
     <title>test popup</title>
     <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
         body {
-            margin: 10px;
-            padding: 0px;
-            width: 250px;
+            padding: 10px;
+            width: 325px;
             font-family: "Helvetica Neue", "Calibri", Serif;
-            font-size: 1em;
         }
-        span {
+        span, input {
             display: inline-block;
-            margin-top: 5px;
-            width: 100px;
+            vertical-align: middle;
         }
-        #mockclientid, #mockserver {
-            width: 135px
+        .label {
+            line-height: 28px;
+        }
+        input {
+            float: right;
+            padding: 5px 2px;
+            width: 220px;
+            font-size: 14px;
+            line-height: 16px;
+            border: 1px solid #ccc;
+        }
+
+        .bottom {
+            margin-top: 5px;
+        }
+        .msg {
+            font-size: 14px;
+            line-height: 28px;
+            font-style: italic;
+            color: #666;
+        }
+        .btn {
+            padding: 5px;
+            float: right;
+            background-color: green;
+            color: #fff;
         }
     </style>
 </head>
 <body>
 
-<div>
-    <input type="checkbox" id="mockenabled">
-    <label for="mockenabled">mock enabled</label>
-</div>
-<div>
-    <span>mock clientid</span>
-    <input type="text" id="mockclientid" disabled>
-</div>
-<div>
-    <span>mock server</span>
-    <input type="text" id="mockserver" disabled>
-</div>
+<div><span class="label">Mock Server:</span><input id="mockserver" type="text" value="https://parrotmocker.leanapp.cn"></div>
+<div class="bottom"><span class="msg">Hi, abcdefgh, I'm ready!</span><span class="btn">Click to Mock</span></div>
 <script type="text/javascript" src="./popup.js"></script>
 
 </body>
