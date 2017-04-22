@@ -6,9 +6,11 @@ This package supports to intercept XHR/JSONP/Fetch requests and forward to the s
 
 ### Chrome plugin
 
-Sorry for that I don't have a Google developer account to publish the plugin. But you can load the plugin by following Google's [development guide](https://developer.chrome.com/extensions/getstarted#unpacked). The plugin folder is `crx`, or use the packed .crx file from [releases](https://github.com/chinesedfan/parrot-mocker/releases).
+Install from [Chrome web store](https://chrome.google.com/webstore/detail/parrotmocker/hdhamekapmnmceohfdbfelofidflfelm).
 
-If the plugin is disabled by Chrome, you can install it again.
+Or load the plugin by following Google's [development guide](https://developer.chrome.com/extensions/getstarted#unpacked). The plugin folder is `crx`.
+
+If the development mode plugin is disabled by Chrome, you can uninstall and install it again.
 
 ### Standalone
 
@@ -57,6 +59,10 @@ module.exports = function*(next) {
     yield* next;
 };
 ```
+
+## License
+
+MIT
 
 ## Acknowledgement
 
