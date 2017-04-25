@@ -11,10 +11,15 @@ function testXhr() {
 
     $.ajax({
         url: host + '/api/testxhr',
+        type: 'POST',
+        data: {
+            a: 1
+        },
         timeout: 2000,
         success: function(json) {
             if (json && json.code == 200) {
                 msg = json.msg;
+                console.log('[testXhr]', JSON.stringify(json.data));
             } else {
                 msg = 'Invalid response';
             }
