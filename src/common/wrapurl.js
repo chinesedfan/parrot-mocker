@@ -11,6 +11,9 @@ var cst = require('./constants.js');
  * @return {String} the url to the mock server
  */
 module.exports = function(urlStr, options, innerOpts) {
+    if (urlStr.indexOf('/') === 0) {
+      urlStr = window.location.origin + urlStr
+    }
     var parsedUrl = url.parse(urlStr, true, true);
     // do not forward relative or local request, beacuse the server can not resolve
     if (!parsedUrl.host) return urlStr;
