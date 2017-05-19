@@ -10,13 +10,13 @@ var jsonp = require('./wrapper/jsonp.js');
 
 (function() {
     if (window[cst.GLOBAL_LOCK]) return;
-    window[cst.GLOBAL_LOCK] = true;
 
     var query = url.parse(location.href, true).query;
     // enable if the switch is on
     var mock = query[cst.QUERY_MOCK_ENABLED] || cookies.getItem(document.cookie, cst.COOKIE_MOCK_ENABLED);
     if (mock === cst.COOKIE_MOCK_ENABLED_OK) {
         enableIntercept();
+        window[cst.GLOBAL_LOCK] = true;
     }
     // update cookies (invalid values mean disabled)
     if (query[cst.QUERY_MOCK_ENABLED]) {
