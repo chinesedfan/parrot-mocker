@@ -11,7 +11,7 @@ module.exports = {
     module: {
         loaders: [{
             test: /dist\/parrot\.js$/,
-            loader: 'raw'
+            loader: 'raw-loader'
         }]
     }
 };
