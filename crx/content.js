@@ -27,6 +27,7 @@ var handlers = {
     'query-status': function(message, sender, sendResponse) {
         sendResponse({
             debug: cookies.getItem(document.cookie, cst.COOKIE_MOCK_DEBUG),
+            locked: !!document.getElementById('parrot-mock-web-mark'), // issue #2
             enabled: isActive(),
             server: cookies.getItem(document.cookie, cst.COOKIE_MOCK_SERVER),
             clientid: cookies.getItem(document.cookie, cst.COOKIE_MOCK_CLIENTID)

@@ -6,13 +6,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
         var status = {
             event: 'mode-change',
-            enabled: false,
+            locked: true, // whether the plugin is locked
+            enabled: false, // whether the mock is enabled
             clientid: '',
             server: ''
         };
 
         chrome.tabs.sendMessage(tabs[0].id, {event: 'query-status'}, function(res) {
             if (!res) return;
+            status.locked = res.locked;
             status.enabled = res.enabled;
             status.clientid = res.clientid || '';
             status.server = decodeURIComponent(res.server || '');
@@ -21,6 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         eleBtn.addEventListener('click', function() {
+            if (status.locked) return;
+
             if (status.enabled) {
                 status.enabled = false;
                 chrome.tabs.sendMessage(tabs[0].id, status);
@@ -65,7 +69,9 @@ function updateEleInput(eleInput, status) {
 }
 function updateEleMsg(eleMsg, status) {
     var msg;
-    if (status.enabled) {
+    if (status.locked) {
+        msg = 'Don\'t use at the mocker website!';
+    } else if (status.enabled) {
         if (status.clientid) {
             msg = 'Hi, ' + status.clientid + ', I\'m mocking!';
         } else {
@@ -81,7 +87,10 @@ function updateEleMsg(eleMsg, status) {
     eleMsg.innerHTML = msg;
 }
 function updateEleBtn(eleBtn, status) {
-    if (status.enabled) {
+    if (status.locked) {
+        eleBtn.innerHTML = 'Unable to Mock';
+        eleBtn.className = 'btn locked';
+    } else if (status.enabled) {
         eleBtn.innerHTML = 'Click to Stop';
         eleBtn.className = 'btn stop';
     } else {
