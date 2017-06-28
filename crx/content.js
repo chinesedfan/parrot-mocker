@@ -28,6 +28,7 @@ var handlers = {
         sendResponse({
             debug: cookies.getItem(document.cookie, cst.COOKIE_MOCK_DEBUG),
             locked: !!document.getElementById('parrot-mock-web-mark'), // issue #2
+            ishttps: location.protocol === 'https:',
             enabled: isActive(),
             server: cookies.getItem(document.cookie, cst.COOKIE_MOCK_SERVER),
             clientid: cookies.getItem(document.cookie, cst.COOKIE_MOCK_CLIENTID)

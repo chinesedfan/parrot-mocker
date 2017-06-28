@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var status = {
             event: 'mode-change',
             locked: true, // whether the plugin is locked
+            ishttps: false, // whether the page is https
             enabled: false, // whether the mock is enabled
             clientid: '',
             server: ''
@@ -15,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
         chrome.tabs.sendMessage(tabs[0].id, {event: 'query-status'}, function(res) {
             if (!res) return;
             status.locked = res.locked;
+            status.ishttps = res.ishttps;
             status.enabled = res.enabled;
             status.clientid = res.clientid || '';
             status.server = decodeURIComponent(res.server || '');
@@ -25,10 +27,17 @@ document.addEventListener('DOMContentLoaded', function() {
         eleBtn.addEventListener('click', function() {
             if (status.locked) return;
 
+            // disable
             if (status.enabled) {
                 status.enabled = false;
                 chrome.tabs.sendMessage(tabs[0].id, status);
                 updateStatus();
+                return;
+            }
+
+            // enable
+            if (status.ishttps && !/^https:/.test(eleInput.value)) {
+                eleMsg.innerHTML = 'HTTPS pages require HTTPS mock server!';
                 return;
             }
 
