@@ -55,7 +55,7 @@ function writeCookieHelper(key, value, vEnd) {
     cookies.setItem(key, value, vEnd, '/', location.hostname);
 }
 function writeCookie(key, value) {
-    writeCookieHelper(key, value, Infinity);
+    writeCookieHelper(key, value, 24 * 60 * 60);
 }
 function removeCookie(key) {
     writeCookieHelper(key, '', 'Thu, 01 Jan 1970 00:00:00 GMT');

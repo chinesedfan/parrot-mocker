@@ -44,5 +44,5 @@ function wrapUrl(urlStr, reqType) {
 }
 
 function writeCookie(key, value) {
-    cookies.setItem(key, value, Infinity, '/', location.hostname);
+    cookies.setItem(key, value, 24 * 60 * 60, '/', location.hostname);
 }
