@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 name: '__mock_clientid'
             }, function(cookie) {
                 if (chrome.runtime.lastError || !cookie) {
-                    eleMsg.innerHTML = 'No client id is found!';
+                    eleMsg.innerHTML = 'No client id is found in this mock server!';
                     return;
                 }
 
