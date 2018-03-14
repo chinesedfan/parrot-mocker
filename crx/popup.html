@@ -24,10 +24,21 @@
         input {
             float: right;
             padding: 5px 2px;
-            width: 275px;
+            width: 250px;
             font-size: 14px;
             line-height: 16px;
             border: 1px solid #ccc;
+            outline: none;
+        }
+
+        .settings {
+            display: inline-block;
+            margin-right: 5px;
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            background: url('./img/settings.svg') center / cover no-repeat;
+            cursor: pointer;
         }
 
         .bottom {
@@ -65,7 +76,7 @@
 </head>
 <body>
 
-<div><span class="label">Mock Server:</span><input id="mockserver" type="text"></div>
+<div><i id="btn-settings" class="settings"></i><span class="label">Mock Server:</span><input id="mockserver" type="text"></div>
 <div class="bottom"><span class="msg">Hmm...</span><span class="btn">Click to Mock</span></div>
 <script type="text/javascript" src="./popup.js"></script>
 

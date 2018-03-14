@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var eleInput = document.getElementById('mockserver');
         var eleMsg = document.getElementsByClassName('msg')[0];
         var eleBtn = document.getElementsByClassName('btn')[0];
+        var eleSettings = document.getElementById('btn-settings');
 
         var status = {
             event: 'mode-change',
@@ -24,6 +25,9 @@ document.addEventListener('DOMContentLoaded', function() {
             updateStatus();
         });
 
+        eleSettings.addEventListener('click', function() {
+            chrome.runtime.openOptionsPage();
+        });
         eleBtn.addEventListener('click', function() {
             if (status.locked) return;
 
