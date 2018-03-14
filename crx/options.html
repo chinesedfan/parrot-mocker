@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Parrot Mocker Settings</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            padding: 30px;
+            font-family: "Helvetica Neue", "Calibri", Serif;
+        }
+        span, input {
+            display: inline-block;
+            vertical-align: middle;
+        }
+        input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+            color: #ccc;
+        }
+        .item {
+            margin-bottom: 30px;
+            font-size: 15px;
+            line-height: 28px;
+        }
+        .label {
+            width: 150px;
+        }
+        .desc {
+            color: #999;
+        }
+        .desc::before {
+            content: '#';
+        }
+        input {
+            padding: 5px;
+            width: 275px;
+            font-size: 14px;
+            line-height: 16px;
+            text-align: right;
+            border: none;
+            border-bottom: 1px solid #ccc;
+            outline: none;
+        }
+        textarea {
+            margin-top: 20px;
+            padding: 5px;
+            width: 100%;
+            height: 100px;
+            box-sizing: border-box;
+            font-size: 14px;
+            line-height: 20px;
+            resize: vertical;
+            outline: none;
+        }
+
+        .bottom {
+            margin-top: 10px;
+            height: 28px;
+        }
+        .msg {
+            font-size: 14px;
+            line-height: 28px;
+            font-style: italic;
+            color: #666;
+        }
+        .btn {
+            width: 100px;
+            padding: 5px;
+            float: right;
+            font-size: 14px;
+            line-height: 18px;
+            text-align: center;
+            background-color: green;
+            color: #fff;
+            cursor: pointer;
+        }
+        .btn.locked {
+            background-color: gray;
+            cursor: not-allowed;
+        }
+        .btn.stop {
+            background-color: red;
+        }
+        .btn.loading {
+            background-color: gray;
+        }
+    </style>
+</head>
+<body>
+
+<div class="item"><span class="label">Mock Server:</span><input data-key="mockserver" type="text" placeholder="https://parrotmocker.leanapp.cn"></div>
+<div class="item"><span class="label">Cookie duration(day):</span><input data-key="duration" type="text" placeholder="1"></div>
+<div class="item"><span class="label">Ignored rules:</span><span class="desc">host matched requests will not be interceptted to the mock server</span><textarea data-key="rules" placeholder="/^$|local/"></textarea></div>
+<div class="bottom"><span class="msg">Hmm...</span><span class="btn">Save</span></div>
+
+<script type="text/javascript" src="./options.js"></script>
+
+</body>
+</html>
