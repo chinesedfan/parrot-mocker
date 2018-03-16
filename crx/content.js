@@ -49,6 +49,7 @@ script.innerHTML = parrot;
 document.documentElement.appendChild(script);
 
 setTimeout(function() {
+    // delay to wait the injected script updated the cookie according to url parameters
     send_icon_message(isActive());
 }, 200);
 
