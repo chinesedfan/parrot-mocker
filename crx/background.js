@@ -9,9 +9,13 @@ chrome.extension.onMessage.addListener(function(message, sender, sendResponse){
         update_icon(message.active);
     }
 });
+update_icon(false);
 
 function update_icon(active) {
-    chrome.browserAction.setIcon({
-        path: active ? 'img/icon-active-64.png' : 'img/icon-inactive-64.png'
+    chrome.browserAction.setBadgeText({
+        text: active ? 'on' : 'off'
+    });
+    chrome.browserAction.setBadgeBackgroundColor({
+        color: active ? [0, 100, 0, 200] : [128, 128, 128, 200]
     });
 }

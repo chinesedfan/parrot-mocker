@@ -4,11 +4,11 @@
     "version": "1.3.0",
     "description": "Intercept h5/node.js requests and mock reponses",
     "icons": {
-        "64": "img/icon-active-64.png"
+        "128": "img/parrot-128.png"
     },
     "browser_action": {
         "default_title": "ParrotMocker",
-        "default_icon": "img/icon-active-64.png",
+        "default_icon": "img/parrot-32.png",
         "default_popup": "popup.html"
     },
     "content_scripts": [{
