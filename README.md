@@ -62,7 +62,7 @@ module.exports = function*(next) {
 
 ## License
 
-MIT
+[MIT](https://github.com/chinesedfan/parrot-mocker/blob/master/LICENSE)
 
 ## Acknowledgement
 
