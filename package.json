@@ -7,7 +7,7 @@
   "scripts": {
     "build": "sh build.sh",
     "prepublish": "npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [
     "api",
@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/chinesedfan/parrot-mocker",
   "devDependencies": {
+    "jest": "^22.4.2",
     "raw-loader": "^0.5.1",
     "webpack": "^1.13.1"
   },
