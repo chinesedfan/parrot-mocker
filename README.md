@@ -1,4 +1,4 @@
-# parrot-mocker
+# parrot-mocker [![npm version](https://badge.fury.io/js/parrot-mocker.svg)](https://badge.fury.io/js/parrot-mocker) [![Build Status](https://travis-ci.org/chinesedfan/parrot-mocker.svg?branch=master)](https://travis-ci.org/chinesedfan/parrot-mocker) [![License](https://img.shields.io/github/license/chinesedfan/parrot-mocker.svg)][license]
 
 This package supports to intercept XHR/JSONP/Fetch requests and forward to the specified [mock server](https://github.com/chinesedfan/parrot-mocker-web).
 
@@ -62,10 +62,12 @@ module.exports = function*(next) {
 
 ## License
 
-[MIT](https://github.com/chinesedfan/parrot-mocker/blob/master/LICENSE)
+[MIT][license]
 
 ## Acknowledgement
 
 * [whatwg-fetch](https://www.npmjs.com/package/whatwg-fetch), fetch polyfill
 * [mozilla-doc-cookies](https://www.npmjs.com/package/mozilla-doc-cookies), cookie utils
 * [cortex-cookie-manager](https://github.com/cortexjs/cortex-cookie-manager), crx sample
+
+[license]: https://github.com/chinesedfan/parrot-mocker/blob/master/LICENSE
