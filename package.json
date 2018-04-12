@@ -7,7 +7,7 @@
   "scripts": {
     "build": "sh build.sh",
     "prepublish": "npm run build",
-    "test": "jest"
+    "test": "jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "keywords": [
     "api",
@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/chinesedfan/parrot-mocker",
   "devDependencies": {
+    "coveralls": "^3.0.0",
     "jest": "^22.4.2",
     "jsdom": "^11.7.0",
     "raw-loader": "^0.5.1",
