@@ -41,6 +41,8 @@ We export a function to rewrite the request url.
     - reqType `string` the type of request, like `jsonp`
     - pageUrl `string` the url of the page
     - cookie `string` the cookie of the page request
+    - shouldSkip `function` skip rewritting if returns true. By default, no host or including `local` will be filtered. Its arguments are:
+        - host `string` the API host
 
 For example, let's make a simple middleware for Koa,
 
