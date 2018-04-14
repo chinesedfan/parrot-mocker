@@ -67,7 +67,7 @@ function isActive() {
     return cookies.getItem(document.cookie, cst.COOKIE_MOCK_ENABLED) === cst.COOKIE_MOCK_ENABLED_OK;
 }
 function send_icon_message(active) {
-    chrome.extension.sendMessage({
+    chrome.runtime.sendMessage({
         event: 'set-icon',
         active: active
     });
