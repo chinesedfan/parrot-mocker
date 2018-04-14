@@ -6,7 +6,7 @@ const { JSDOM } = require('jsdom');
 const { COOKIE_MOCK_CLIENTID } = require('../../src/common/constants');
 
 let eleInput, eleMsg, eleBtn;
-describe('background.js', function() {
+describe('popup.js', function() {
     let script;
     let window;
 
