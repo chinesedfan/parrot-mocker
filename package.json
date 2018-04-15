@@ -7,7 +7,8 @@
   "scripts": {
     "build": "sh build.sh",
     "prepublish": "npm run build",
-    "test": "jest --coverage && cat ./coverage/lcov.info | coveralls"
+    "test": "jest",
+    "test:coverage": "jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "keywords": [
     "api",
