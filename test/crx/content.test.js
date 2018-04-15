@@ -1,5 +1,5 @@
 const chrome = require('sinon-chrome');
-const { stub } = require('sinon');
+const { assert, stub } = require('sinon');
 const cst = require('../../src/common/constants.js');
 let cookies;
 
@@ -8,20 +8,25 @@ describe('content.js', function() {
         global.chrome = chrome;
         global.window = {};
         global.location = {
+            protocol: 'https:',
             reload: jest.fn()
         };
         global.document = {
             createElement: jest.fn().mockReturnValue({}),
+            getElementById: jest.fn().mockReturnValue(true),
             documentElement: {
                 appendChild: jest.fn()
             }
         };
 
+        chrome.flush();
+        jest.useFakeTimers();
         jest.resetModules();
-        jest.mock('../../src/common/cookies');
-        jest.mock('../../dist/parrot', () => 'str');
+        jest.mock('../../src/common/cookies.js');
+        jest.mock('../../dist/parrot.js', () => 'str');
 
-        cookies = require('../../src/common/cookies');
+        cookies = require('../../src/common/cookies.js');
+        cookies.getItem.mockImplementation(require.requireActual('../../src/common/cookies.js').getItem);
     });
 
     describe('onMessage handler', function() {
@@ -50,16 +55,78 @@ describe('content.js', function() {
             expectCookiesSetItem(1, cst.COOKIE_MOCK_SERVER, 'https://mockserver.com', vEnd);
             expectCookiesSetItem(2, cst.COOKIE_MOCK_CLIENTID, 'abcdefgh', vEnd);
         });
+        it('should reload', function() {
+            chrome.runtime.onMessage.addListener = stub().callsArgWith(0, {
+                event: 'mode-change',
+                enabled: false
+            });
+            global.location.href = 'https://page.com/path';
+            require('../../crx/content');
+
+            expect(global.location.reload.mock.calls).toHaveLength(1);
+        });
         it('should reload without special parameters', function() {
+            chrome.runtime.onMessage.addListener = stub().callsArgWith(0, {
+                event: 'mode-change',
+                enabled: false
+            });
+            global.location.href = `https://page.com/path?${cst.QUERY_MOCK_ENABLED}=1`;
+            require('../../crx/content');
+
+            expect(global.location.href).toEqual(`https://page.com/path?${cst.QUERY_MOCK_ENABLED}=`);
+            expect(global.location.reload.mock.calls).toHaveLength(0);
         });
         it('should check activate and update the icon', function() {
+            chrome.runtime.onMessage.addListener = stub().callsArgWith(0, {
+                event: 'test-activate',
+                enabled: false
+            });
+            global.document.cookie = `${cst.COOKIE_MOCK_ENABLED}=${cst.COOKIE_MOCK_ENABLED_OK}`;
+            require('../../crx/content');
 
+            assert.calledOnce(chrome.runtime.sendMessage);
+            assert.calledWithExactly(chrome.runtime.sendMessage, {
+                event: 'set-icon',
+                active: true
+            });
         });
         it('should query status', function() {
+            const sendResponse = jest.fn();
+            chrome.runtime.onMessage.addListener = stub().callsArgWith(0, {
+                event: 'query-status'
+            }, {}, sendResponse);
+            global.document.cookie = [
+                `${cst.COOKIE_MOCK_DEBUG}=1`,
+                `${cst.COOKIE_MOCK_ENABLED}=${cst.COOKIE_MOCK_ENABLED_OK}`,
+                `${cst.COOKIE_MOCK_SERVER}=mockserver`,
+                `${cst.COOKIE_MOCK_CLIENTID}=abcdefgh`
+            ].join(';');
+            require('../../crx/content');
+
+            expect(sendResponse).toHaveBeenCalledTimes(1);
+            expect(sendResponse).toHaveBeenLastCalledWith({
+                debug: '1',
+                locked: true,
+                ishttps: true,
+                enabled: true,
+                server: 'mockserver',
+                clientid: 'abcdefgh'
+            });
         });
     });
     it('should init icon after injecting the script', function() {
+        jest.clearAllTimers();
+        require('../../crx/content');
 
+        expect(global.document.documentElement.appendChild).toHaveBeenCalledTimes(1);
+
+        jest.advanceTimersByTime(200);
+
+        assert.calledOnce(chrome.runtime.sendMessage);
+        assert.calledWithExactly(chrome.runtime.sendMessage, {
+            event: 'set-icon',
+            active: false
+        });
     });
 });
 
