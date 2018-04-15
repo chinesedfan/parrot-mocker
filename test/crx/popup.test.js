@@ -5,10 +5,10 @@ const { assert, stub } = require('sinon');
 const { JSDOM } = require('jsdom');
 const { COOKIE_MOCK_CLIENTID } = require('../../src/common/constants');
 
+let window;
 let eleInput, eleMsg, eleBtn;
 describe('popup.js', function() {
     let script;
-    let window;
 
     beforeAll(function() {
         script = fs.readFileSync(path.resolve(__dirname, '../../crx/popup.js')).toString();
@@ -94,15 +94,12 @@ describe('popup.js', function() {
         });
     });
     describe('mock button click', function() {
-        beforeEach(function() {
-            eleBtn.addEventListener = stub().callsArg(1);
-        });
-
         it('should ignore if is locked', function() {
             chrome.tabs.sendMessage.callsArgWith(2, {
                 locked: true
             });
             window.eval(script);
+            simulateBtnClick();
 
             assert.notCalled(chrome.cookies.get);
         });
@@ -112,6 +109,7 @@ describe('popup.js', function() {
                 server: 'http://non-https.com'
             });
             window.eval(script);
+            simulateBtnClick();
 
             expect(eleMsg.innerHTML).toEqual('HTTPS pages require HTTPS mock server!');
             assert.notCalled(chrome.cookies.get);
@@ -123,6 +121,7 @@ describe('popup.js', function() {
             });
             chrome.cookies.get.callsArgWith(1, '');
             window.eval(script);
+            simulateBtnClick();
 
             expect(eleMsg.innerHTML).toEqual('No client id is found in this mock server!');
             assert.calledOnce(chrome.cookies.get);
@@ -139,13 +138,10 @@ describe('popup.js', function() {
             }).callsArgWith(1, {
                 value: 'newclientid'
             });
-            eleBtn.addEventListener = function(type, fn) {
-                eleBtn.trigger = fn;
-            };
             window.eval(script);
             // mock user input
             eleInput.value = 'https://newmock.com';
-            eleBtn.trigger('click');
+            simulateBtnClick();
 
             assert.calledOnce(chrome.cookies.get);
             assert.calledWithMatch(chrome.tabs.sendMessage.secondCall, 123, {
@@ -161,11 +157,8 @@ describe('popup.js', function() {
                 clientid: 'abcdefgh',
                 server: 'https://mockserver.com'
             });
-            eleBtn.addEventListener = function(type, fn) {
-                eleBtn.trigger = fn;
-            };
             window.eval(script);
-            eleBtn.trigger('click');
+            simulateBtnClick();
 
             assert.notCalled(chrome.cookies.get);
             assert.calledWithMatch(chrome.tabs.sendMessage.secondCall, 123, {
@@ -191,8 +184,9 @@ function expectDisabledUI(clientid) {
     expect(eleBtn.innerHTML).toEqual('Click to Mock');
     expect(eleBtn.className).toEqual('btn');
 }
-function mockBtnHandler() {
-    eleBtn.addEventListener = function(type, fn) {
-        eleBtn.trigger = fn;
-    };
+
+function simulateBtnClick() {
+    window.eval(`
+        document.getElementsByClassName('btn')[0].click();
+    `);
 }
