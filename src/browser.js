@@ -3,6 +3,7 @@ var url = require('url');
 var cst = require('./common/constants.js');
 var cookies = require('./common/cookies.js');
 var innerWrapUrl = require('./common/wrapurl.js');
+var shouldSkip = require('./common/shouldskip.js');
 
 var fetch = require('./wrapper/fetch-polyfill.js'); // force fetch to be implemented by xhr
 var xhr = require('./wrapper/xhr.js');
@@ -36,7 +37,10 @@ function wrapUrl(urlStr, reqType) {
     return innerWrapUrl(urlStr, {
         reqType: reqType,
         pageUrl: location.href,
-        cookie: document.cookie // ATTENTION: the page cookies are different with the real API cookies
+        cookie: document.cookie, // ATTENTION: the page cookies are different with the real API cookies
+        shouldSkip: function(host) {
+            return shouldSkip(host, localStorage.getItem(cst.LS_MOCK_SKIP_RULES));
+        }
     }, {
         isServer: false,
         host: location.host
