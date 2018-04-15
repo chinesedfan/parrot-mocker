@@ -1,11 +1,11 @@
+var localStorage = window.localStorage;
 var eles = document.querySelectorAll('.item [data-key]');
-eles = Array.prototype.slice.call(eles);
 
 // load
 eles.forEach(function(el) {
     var key = el.getAttribute('data-key');
     var value = localStorage.getItem(key) || '';
-    if (value != el.getAttribute('placeholder')) {
+    if (value && value != el.getAttribute('placeholder')) {
         el.value = value;
     }
 });

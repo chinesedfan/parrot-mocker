@@ -90,9 +90,9 @@
 </head>
 <body>
 
-<div class="item"><span class="label">Mock Server:</span><input data-key="mockserver" type="text" placeholder="https://parrotmocker.leanapp.cn"></div>
-<div class="item"><span class="label">Cookie duration(day):</span><input data-key="duration" type="text" placeholder="1"></div>
-<div class="item"><span class="label">Ignored rules:</span><span class="desc">host matched requests will not be interceptted to the mock server</span><textarea data-key="rules" placeholder="/^$|local/"></textarea></div>
+<div class="item"><span class="label">Mock Server:</span><input data-key="__mock_server" type="text" placeholder="https://parrotmocker.leanapp.cn"></div>
+<div class="item"><span class="label">Cookie duration(day):</span><input data-key="_mock_duration" type="text" placeholder="1"></div>
+<div class="item"><span class="label">Ignored rules:</span><span class="desc">host matched requests will not be interceptted to the mock server</span><textarea data-key="__mock_skip_rules" placeholder="/^$|local/"></textarea></div>
 <div class="bottom"><span class="msg">Hmm...</span><span class="btn">Save</span></div>
 
 <script type="text/javascript" src="./options.js"></script>
