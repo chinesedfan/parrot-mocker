@@ -25,13 +25,12 @@
             line-height: 28px;
         }
         .label {
-            width: 150px;
+            width: 200px;
+            font-size: 20px;
         }
         .desc {
+            margin: 10px 0;
             color: #999;
-        }
-        .desc::before {
-            content: '#';
         }
         input {
             padding: 5px;
@@ -42,6 +41,12 @@
             border: none;
             border-bottom: 1px solid #ccc;
             outline: none;
+        }
+        table {
+            line-height: 20px;
+        }
+        th, td {
+            padding: 5px 10px;
         }
         textarea {
             margin-top: 20px;
@@ -92,7 +97,27 @@
 
 <div class="item"><span class="label">Mock Server:</span><input data-key="__mock_server" type="text" placeholder="https://parrotmocker.leanapp.cn"></div>
 <div class="item"><span class="label">Cookie duration(day):</span><input data-key="_mock_duration" type="text" placeholder="1"></div>
-<div class="item"><span class="label">Ignored rules:</span><span class="desc">host matched requests will not be interceptted to the mock server</span><textarea data-key="__mock_skip_rules" placeholder="/^$|local/"></textarea></div>
+<div class="item"><span class="label">Ignored rules:</span>
+    <span class="desc">requests whose hosts are matched with any rule line will <strong>NOT</strong> be intercepted, i.e.</span>
+    <table border="1"><tbody>
+        <tr>
+            <th style="width: 90px;">sample rule</th>
+            <th style="width: 170px;">matched requests</th>
+            <th>comments</th>
+        </tr>
+        <tr>
+            <td style="text-align: center;">local</td>
+            <td style="text-align: center;">local.xx.com/path/xhr<br>localhost/path/jsonp</td>
+            <td>if the host contains the rule, it is matched</td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">/^$/</td>
+            <td style="text-align: center;">/path/xhr<br>/path/jsonp</td>
+            <td>if the rule starts and ends with a slash, it is a regular expression</td>
+        </tr>
+    </tbody></table>
+    <textarea data-key="__mock_skip_rules" placeholder="/^$|local/"></textarea>
+</div>
 <div class="bottom"><span class="msg">Hmm...</span><span class="btn">Save</span></div>
 
 <script type="text/javascript" src="./options.js"></script>
