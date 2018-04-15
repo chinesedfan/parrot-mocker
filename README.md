@@ -1,4 +1,4 @@
-# parrot-mocker [![npm version](https://badge.fury.io/js/parrot-mocker.svg)](https://badge.fury.io/js/parrot-mocker) [![Build Status](https://travis-ci.org/chinesedfan/parrot-mocker.svg?branch=master)](https://travis-ci.org/chinesedfan/parrot-mocker) [![License](https://img.shields.io/github/license/chinesedfan/parrot-mocker.svg)][license]
+# parrot-mocker [![npm version](https://badge.fury.io/js/parrot-mocker.svg)](https://badge.fury.io/js/parrot-mocker) [![Build Status](https://travis-ci.org/chinesedfan/parrot-mocker.svg?branch=master)](https://travis-ci.org/chinesedfan/parrot-mocker) [![Coverage Status](https://coveralls.io/repos/github/chinesedfan/parrot-mocker/badge.svg?branch=master)](https://coveralls.io/github/chinesedfan/parrot-mocker?branch=master) [![License](https://img.shields.io/github/license/chinesedfan/parrot-mocker.svg)][license]
 
 This package supports to intercept XHR/JSONP/Fetch requests and forward to the specified [mock server](https://github.com/chinesedfan/parrot-mocker-web).
 

@@ -4,7 +4,7 @@ chrome.tabs.onActivated.addListener(function(activeInfo) {
     });
 });
 
-chrome.extension.onMessage.addListener(function(message, sender, sendResponse){
+chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
     if (message.event === 'set-icon') {
         update_icon(message.active);
     }

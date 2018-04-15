@@ -1,1 +1,8 @@
+.idea
+.DS_Store
+.vscode
+
+coverage
 docs
+
+yarn.lock
