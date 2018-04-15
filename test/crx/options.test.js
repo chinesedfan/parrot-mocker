@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { JSDOM } = require('jsdom');
+const cst = require('../../src/common/constants.js');
 
 let window;
 let eles, eleMsg, eleBtn;
@@ -76,12 +77,27 @@ describe('options.js', function() {
             expect(el.value).toEqual(values[el.getAttribute('data-key')]);
         });
     });
-    it('should save and update the message', function() {
-        const values = {};
-        eles.forEach(function(el) {
-            values[el.getAttribute('data-key')] = el.getAttribute('placeholder');
-        });
+    it('should reject to save if the data is not valid', function() {
+        const values = {
+            [cst.COOKIE_MOCK_SERVER]: 'http://mockserver.com',
+            [cst.LS_MOCK_DURATION]: 'not-int',
+            [cst.LS_MOCK_SKIP_RULES]: 'sample-rules'
+        };
+        mockLocalStorage(values);
+        window.eval(script);
+        window.eval(`
+            document.querySelector('.btn').click();
+        `);
 
+        expect(eleMsg.innerHTML).toEqual('Cookie duration requires int.');
+        expect(window.localStorage.setItem).toHaveBeenCalledTimes(0);
+    });
+    it('should save and update the message', function() {
+        const values = {
+            [cst.COOKIE_MOCK_SERVER]: 'http://mockserver.com',
+            [cst.LS_MOCK_DURATION]: 123,
+            [cst.LS_MOCK_SKIP_RULES]: 'sample-rules'
+        };
         mockLocalStorage(values);
         window.eval(script);
         window.eval(`

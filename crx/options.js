@@ -1,5 +1,6 @@
 var localStorage = window.localStorage;
 var eles = document.querySelectorAll('.item [data-key]');
+eles = Array.prototype.slice.call(eles);
 
 // load
 eles.forEach(function(el) {
@@ -14,8 +15,25 @@ eles.forEach(function(el) {
 var eleBtn = document.querySelector('.btn');
 var eleMsg = document.querySelector('.msg');
 eleBtn.addEventListener('click', function() {
-    eles.forEach(function(el) {
-        localStorage.setItem(el.getAttribute('data-key'), el.value || el.getAttribute('placeholder'));
+    var data = {};
+    var invalid = eles.some(function(el) {
+        var value = el.value;
+        switch (el.getAttribute('data-type')) {
+        case 'int':
+            if (!/[1-9][0-9]*/.test(value)) {
+                // TODO: if added other fields, update the text
+                eleMsg.innerHTML = 'Cookie duration requires int.';
+                return true;
+            }
+            value = parseInt(value);
+            break;
+        }
+        data[el.getAttribute('data-key')] = value || el.getAttribute('placeholder');
+    });
+    if (invalid) return;
+
+    Object.keys(data).forEach(function(key) {
+        localStorage.setItem(key, data[key]);
     });
     eleMsg.innerHTML = '...done!';
 });
