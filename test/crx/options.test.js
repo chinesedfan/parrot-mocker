@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { JSDOM } = require('jsdom');
 const cst = require('../../src/common/constants.js');
+const { coverageVar, instrument } = require('../util.js');
 
 let window;
 let eles, eleMsg, eleBtn;
@@ -9,7 +10,8 @@ describe('options.js', function() {
     let script;
 
     beforeAll(function() {
-        script = fs.readFileSync(path.resolve(__dirname, '../../crx/options.js')).toString();
+        const file = path.resolve(__dirname, '../../crx/options.js');
+        script = instrument(file);
     });
 
     beforeEach(function() {
@@ -17,6 +19,7 @@ describe('options.js', function() {
             runScripts: 'outside-only'
         }).then(function(dom) {
             window = dom.window;
+            window[coverageVar] = global[coverageVar];
             window.localStorage = {
                 getItem: jest.fn(),
                 setItem: jest.fn()

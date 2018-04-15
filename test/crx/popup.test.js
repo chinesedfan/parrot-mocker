@@ -4,6 +4,7 @@ const chrome = require('sinon-chrome');
 const { assert, stub } = require('sinon');
 const { JSDOM } = require('jsdom');
 const { COOKIE_MOCK_CLIENTID } = require('../../src/common/constants');
+const { coverageVar, instrument } = require('../util.js');
 
 let window;
 let eleInput, eleMsg, eleBtn;
@@ -11,7 +12,8 @@ describe('popup.js', function() {
     let script;
 
     beforeAll(function() {
-        script = fs.readFileSync(path.resolve(__dirname, '../../crx/popup.js')).toString();
+        const file = path.resolve(__dirname, '../../crx/popup.js');
+        script = instrument(file);
     });
 
     beforeEach(function() {
@@ -22,6 +24,7 @@ describe('popup.js', function() {
             runScripts: 'outside-only'
         }).then(function(dom) {
             window = dom.window;
+            window[coverageVar] = global[coverageVar];
             window.chrome = chrome;
 
             const document = window.document;
