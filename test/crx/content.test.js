@@ -37,7 +37,7 @@ describe('content.js', function() {
             });
             require('../../crx/content');
 
-            expect(cookies.setItem.mock.calls).toHaveLength(1);
+            expect(cookies.setItem).toHaveBeenCalledTimes(1);
             expectCookiesSetItem(0, cst.COOKIE_MOCK_ENABLED, '', 'Thu, 01 Jan 1970 00:00:00 GMT');
         });
         it('should enable and write cookies', function() {
@@ -50,7 +50,7 @@ describe('content.js', function() {
             require('../../crx/content');
 
             const vEnd = 24 * 60 * 60;
-            expect(cookies.setItem.mock.calls).toHaveLength(3);
+            expect(cookies.setItem).toHaveBeenCalledTimes(3);
             expectCookiesSetItem(0, cst.COOKIE_MOCK_ENABLED, cst.COOKIE_MOCK_ENABLED_OK, vEnd);
             expectCookiesSetItem(1, cst.COOKIE_MOCK_SERVER, 'https://mockserver.com', vEnd);
             expectCookiesSetItem(2, cst.COOKIE_MOCK_CLIENTID, 'abcdefgh', vEnd);
@@ -63,7 +63,7 @@ describe('content.js', function() {
             global.location.href = 'https://page.com/path';
             require('../../crx/content');
 
-            expect(global.location.reload.mock.calls).toHaveLength(1);
+            expect(global.location.reload).toHaveBeenCalledTimes(1);
         });
         it('should reload without special parameters', function() {
             chrome.runtime.onMessage.addListener = stub().callsArgWith(0, {
@@ -74,7 +74,7 @@ describe('content.js', function() {
             require('../../crx/content');
 
             expect(global.location.href).toEqual(`https://page.com/path?${cst.QUERY_MOCK_ENABLED}=`);
-            expect(global.location.reload.mock.calls).toHaveLength(0);
+            expect(global.location.reload).toHaveBeenCalledTimes(0);
         });
         it('should check activate and update the icon', function() {
             chrome.runtime.onMessage.addListener = stub().callsArgWith(0, {

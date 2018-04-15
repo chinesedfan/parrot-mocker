@@ -31,13 +31,13 @@ describe('browser', function() {
         require('../src/browser');
 
         expectInterceptCalled(0);
-        expect(cookies.setItem.mock.calls).toHaveLength(0);
+        expect(cookies.setItem).toHaveBeenCalledTimes(0);
     });
     it('should skip if not enabled', function() {
         require('../src/browser');
 
         expectInterceptCalled(0);
-        expect(cookies.setItem.mock.calls).toHaveLength(0);
+        expect(cookies.setItem).toHaveBeenCalledTimes(0);
     });
     it('should enable if has the query', function() {
         global.location = {
@@ -66,7 +66,7 @@ describe('browser', function() {
 
         require('../src/browser');
 
-        expect(cookies.setItem.mock.calls).toHaveLength(3);
+        expect(cookies.setItem).toHaveBeenCalledTimes(3);
         expect(cookies.setItem.mock.calls[0]).toEqual([cst.COOKIE_MOCK_ENABLED, cst.COOKIE_MOCK_ENABLED_OK, duration, path, hostname]);
         expect(cookies.setItem.mock.calls[1]).toEqual([cst.COOKIE_MOCK_SERVER, mockServer, duration, path, hostname]);
         expect(cookies.setItem.mock.calls[2]).toEqual([cst.COOKIE_MOCK_CLIENTID, clientID, duration, path, hostname]);
@@ -84,12 +84,12 @@ describe('browser', function() {
 
         expectInterceptCalled(1);
         expect(global.window[cst.GLOBAL_LOCK]).toEqual(true);
-        expect(cookies.setItem.mock.calls).toHaveLength(0);
+        expect(cookies.setItem).toHaveBeenCalledTimes(0);
     });
 });
 
 function expectInterceptCalled(times) {
-    expect(fetch.init.mock.calls).toHaveLength(times);
-    expect(xhr.init.mock.calls).toHaveLength(times);
-    expect(jsonp.init.mock.calls).toHaveLength(times);
+    expect(fetch.init).toHaveBeenCalledTimes(times);
+    expect(xhr.init).toHaveBeenCalledTimes(times);
+    expect(jsonp.init).toHaveBeenCalledTimes(times);
 }
