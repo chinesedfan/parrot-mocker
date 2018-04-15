@@ -6,6 +6,8 @@ exports.COOKIE_MOCK_SERVER = '__mock_server';
 exports.COOKIE_MOCK_CLIENTID = '__mock_clientid';
 exports.COOKIE_MOCK_DEBUG = '__mock_debug';
 
+exports.LS_MOCK_SKIP_RULES = '__mock_skip_rules';
+
 exports.QUERY_MOCK_ENABLED = '__mock';
 exports.QUERY_MOCK_SERVER = '__host';
 exports.QUERY_MOCK_CLIENTID = '__clientid';
