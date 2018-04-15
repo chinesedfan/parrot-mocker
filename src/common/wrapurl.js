@@ -20,7 +20,7 @@ module.exports = function(urlStr, options, innerOpts) {
     };
     if (shouldSkip(parsedUrl.host)) return urlStr;
 
-    var query = url.parse(options.pageUrl, true).query;
+    var query = url.parse(options.pageUrl || '', true).query;
     var mock = query[cst.QUERY_MOCK_ENABLED] || cookies.getItem(options.cookie, cst.COOKIE_MOCK_ENABLED);
     var host = query[cst.QUERY_MOCK_SERVER] || cookies.getItem(options.cookie, cst.COOKIE_MOCK_SERVER);
 

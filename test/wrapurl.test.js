@@ -8,11 +8,15 @@ describe('wrapurl', function() {
 
     describe('url filter', function() {
         it('should return directly if no host', function() {
-            const urlStr = '/some/path';
+            urlStr = '/some/path';
             expect(innerWrapUrl(urlStr)).toEqual(urlStr);
         });
         it('should return directly if contains "local"', function() {
-            const urlStr = 'http://local.xx.com/some/path';
+            urlStr = 'http://local.xx.com/some/path';
+            expect(innerWrapUrl(urlStr)).toEqual(urlStr);
+        });
+        it('should return directly if not enabled', function() {
+            urlStr = 'http://xx.com/some/path';
             expect(innerWrapUrl(urlStr)).toEqual(urlStr);
         });
     });
