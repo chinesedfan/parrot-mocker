@@ -44,16 +44,25 @@ describe('content.js', function() {
             expect(cookies.setItem).toHaveBeenCalledTimes(1);
             expectCookiesSetItem(0, cst.COOKIE_MOCK_ENABLED, '', 'Thu, 01 Jan 1970 00:00:00 GMT');
         });
-        it('should enable and write cookies', function() {
+        it('should enable, sync local storage and write cookies', function() {
             chrome.runtime.onMessage.addListener = stub().callsArgWith(0, {
                 event: 'mode-change',
                 enabled: true,
                 server: 'https://mockserver.com',
-                clientid: 'abcdefgh'
+                clientid: 'abcdefgh',
+                duration: '2',
+                skipRules: 'rules'
             });
+            global.localStorage.getItem.mockReturnValue('3'); // different value
             require('../../crx/content');
 
-            const vEnd = 24 * 60 * 60;
+            expect(global.localStorage.setItem).toHaveBeenCalledTimes(2);
+            expect(global.localStorage.setItem.mock.calls[0]).toEqual([cst.LS_MOCK_DURATION, '2']);
+            expect(global.localStorage.setItem.mock.calls[1]).toEqual([cst.LS_MOCK_SKIP_RULES, 'rules']);
+            expect(global.localStorage.getItem).toHaveBeenCalledTimes(3);
+            expect(global.localStorage.getItem.mock.calls).toEqual(Array(3).fill([cst.LS_MOCK_DURATION]));
+
+            const vEnd = 24 * 60 * 60 * 3;
             expect(cookies.setItem).toHaveBeenCalledTimes(3);
             expectCookiesSetItem(0, cst.COOKIE_MOCK_ENABLED, cst.COOKIE_MOCK_ENABLED_OK, vEnd);
             expectCookiesSetItem(1, cst.COOKIE_MOCK_SERVER, 'https://mockserver.com', vEnd);
