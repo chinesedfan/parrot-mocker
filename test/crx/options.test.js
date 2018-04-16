@@ -82,7 +82,7 @@ describe('options.js', function() {
     });
     it('should reject to save if the data is not valid', function() {
         const values = {
-            [cst.COOKIE_MOCK_SERVER]: 'http://mockserver.com',
+            [cst.LS_MOCK_SERVER]: 'http://mockserver.com',
             [cst.LS_MOCK_DURATION]: 'not-int',
             [cst.LS_MOCK_SKIP_RULES]: 'sample-rules'
         };
@@ -97,7 +97,7 @@ describe('options.js', function() {
     });
     it('should save and update the message', function() {
         const values = {
-            [cst.COOKIE_MOCK_SERVER]: 'http://mockserver.com',
+            [cst.LS_MOCK_SERVER]: 'http://mockserver.com',
             [cst.LS_MOCK_DURATION]: 123,
             [cst.LS_MOCK_SKIP_RULES]: 'sample-rules'
         };
