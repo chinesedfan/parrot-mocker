@@ -101,6 +101,14 @@ describe('popup.js', function() {
         });
     });
     describe('mock button click', function() {
+        it('should open settings page', function() {
+            window.eval(script);
+            window.eval(`
+                document.getElementById('btn-settings').click();
+            `);
+
+            assert.calledOnce(chrome.runtime.openOptionsPage);
+        });
         it('should ignore if is locked', function() {
             chrome.tabs.sendMessage.callsArgWith(2, {
                 locked: true

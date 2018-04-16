@@ -5,7 +5,7 @@ const cst = require('../../src/common/constants.js');
 const { coverageVar, instrument } = require('../util.js');
 
 let window;
-let eles, eleMsg, eleBtn;
+let eles, eleMsg;
 describe('options.js', function() {
     let script;
 
@@ -28,10 +28,20 @@ describe('options.js', function() {
             const document = window.document;
             eles = document.querySelectorAll('.item [data-key]');
             eleMsg = document.querySelector('.msg');
-            eleBtn = document.querySelector('.btn');
         });
     });
 
+    it('should clear text after input', function() {
+        window.eval(script);
+        eles.forEach(function(el, i) {
+            eleMsg.innerHTML = 'others';
+            window.eval(`
+                var event = new Event('input');
+                eles[${i}].dispatchEvent(event);
+            `);
+            expect(eleMsg.innerHTML).toEqual('Hmm...');
+        });
+    });
     it('should select if focus', function() {
         window.eval(script);
 
