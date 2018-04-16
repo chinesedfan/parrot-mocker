@@ -4,12 +4,16 @@ var parrot = require('../dist/parrot.js');
 
 var handlers = {
     'mode-change': function(message) {
-        if (!message.enabled) {
-            removeCookie(cst.COOKIE_MOCK_ENABLED);
-        } else {
+        if (message.enabled) {
+            // sync info from crx storage to page storage
+            localStorage.setItem(cst.LS_MOCK_DURATION, message.duration);
+            localStorage.setItem(cst.LS_MOCK_SKIP_RULES, message.skipRules);
+
             writeCookie(cst.COOKIE_MOCK_ENABLED, cst.COOKIE_MOCK_ENABLED_OK);
             writeCookie(cst.COOKIE_MOCK_SERVER, message.server);
             writeCookie(cst.COOKIE_MOCK_CLIENTID, message.clientid);
+        } else {
+            removeCookie(cst.COOKIE_MOCK_ENABLED);
         }
         send_icon_message(message.enabled);
 
@@ -57,7 +61,10 @@ function writeCookieHelper(key, value, vEnd) {
     cookies.setItem(key, value, vEnd, '/', location.hostname);
 }
 function writeCookie(key, value) {
-    writeCookieHelper(key, value, 24 * 60 * 60);
+    var duration = localStorage.getItem(cst.LS_MOCK_DURATION);
+    duration = parseInt(duration) || 0;
+
+    writeCookieHelper(key, value, 24 * 60 * 60 * duration);
 }
 function removeCookie(key) {
     writeCookieHelper(key, '', 'Thu, 01 Jan 1970 00:00:00 GMT');

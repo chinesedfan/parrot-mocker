@@ -1,3 +1,12 @@
+var cst = (function(exports) {
+    // copy from src/common/constants.js
+    exports.LS_MOCK_SERVER = '__mock_server';
+    exports.LS_MOCK_DURATION = '__mock_duration';
+    exports.LS_MOCK_SKIP_RULES = '__mock_skip_rules';
+
+    return exports;
+})({});
+
 document.addEventListener('DOMContentLoaded', function() {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         var eleInput = document.getElementById('mockserver');
@@ -11,7 +20,9 @@ document.addEventListener('DOMContentLoaded', function() {
             ishttps: false, // whether the page is https
             enabled: false, // whether the mock is enabled
             clientid: '',
-            server: ''
+            server: '',
+            duration: 1,
+            skipRules: ''
         };
 
         chrome.tabs.sendMessage(tabs[0].id, {event: 'query-status'}, function(res) {
@@ -20,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
             status.ishttps = res.ishttps;
             status.enabled = res.enabled;
             status.clientid = res.clientid || '';
-            status.server = decodeURIComponent(res.server || '');
+            status.server = decodeURIComponent(res.server || localStorage.getItem(cst.LS_MOCK_SERVER));
 
             updateStatus();
         });
@@ -57,6 +68,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 status.server = eleInput.value;
                 status.clientid = cookie.value;
                 status.enabled = !status.enabled;
+                status.duration = localStorage.getItem(cst.LS_MOCK_DURATION);
+                status.skipRules = localStorage.getItem(cst.LS_MOCK_SKIP_RULES);
 
                 chrome.tabs.sendMessage(tabs[0].id, status);
                 updateStatus();
