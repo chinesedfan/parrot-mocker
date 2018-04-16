@@ -9,8 +9,6 @@ var fetch = require('./wrapper/fetch-polyfill.js'); // force fetch to be impleme
 var xhr = require('./wrapper/xhr.js');
 var jsonp = require('./wrapper/jsonp.js');
 
-var localStorage = window.localStorage;
-
 (function() {
     if (window[cst.GLOBAL_LOCK]) return;
 
@@ -51,7 +49,7 @@ function wrapUrl(urlStr, reqType) {
 
 function writeCookie(key, value) {
     var duration = localStorage.getItem(cst.LS_MOCK_DURATION);
-    duration = parseInt(duration) || 0;
+    duration = parseInt(duration) || 1;
 
     cookies.setItem(key, value, 24 * 60 * 60 * duration, '/', location.hostname);
 }

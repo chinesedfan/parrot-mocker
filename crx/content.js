@@ -62,7 +62,7 @@ function writeCookieHelper(key, value, vEnd) {
 }
 function writeCookie(key, value) {
     var duration = localStorage.getItem(cst.LS_MOCK_DURATION);
-    duration = parseInt(duration) || 0;
+    duration = parseInt(duration) || 1;
 
     writeCookieHelper(key, value, 24 * 60 * 60 * duration);
 }

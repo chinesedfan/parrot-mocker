@@ -25,6 +25,10 @@ describe('popup.js', function() {
         }).then(function(dom) {
             window = dom.window;
             window[coverageVar] = global[coverageVar];
+            window.localStorage = {
+                getItem: jest.fn(),
+                setItem: jest.fn()
+            };
             window.chrome = chrome;
 
             const document = window.document;

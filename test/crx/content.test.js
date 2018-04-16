@@ -18,6 +18,10 @@ describe('content.js', function() {
                 appendChild: jest.fn()
             }
         };
+        global.localStorage = {
+            getItem: jest.fn(),
+            setItem: jest.fn()
+        };
 
         chrome.flush();
         jest.useFakeTimers();

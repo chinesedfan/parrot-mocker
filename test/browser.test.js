@@ -11,6 +11,10 @@ describe('browser', function() {
             href: '',
             hostname: ''
         };
+        global.localStorage = {
+            getItem: jest.fn(),
+            setItem: jest.fn()
+        };
 
         jest.resetModules();
         jest.mock('../src/common/cookies.js');
