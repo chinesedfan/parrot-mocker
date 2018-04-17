@@ -24,9 +24,7 @@ describe('wrapurl', function() {
         beforeEach(function() {
             urlStr = 'http://xx.com/some/path';
             options = {
-                pageUrl: `http://yy.com/page?q=1&${cst.QUERY_MOCK_ENABLED}=${cst.COOKIE_MOCK_ENABLED_OK}`,
-                cookie: 'c=2',
-                reqType: 'jsonp'
+                pageUrl: `http://yy.com/page?q=1&${cst.QUERY_MOCK_ENABLED}=${cst.COOKIE_MOCK_ENABLED_OK}`
             };
         });
 

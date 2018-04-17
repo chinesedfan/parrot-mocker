@@ -108,10 +108,30 @@ describe('options.js', function() {
     it('should save and update the message', function() {
         const values = {
             [cst.LS_MOCK_SERVER]: 'http://mockserver.com',
-            [cst.LS_MOCK_DURATION]: 123,
+            [cst.LS_MOCK_DURATION]: '123',
             [cst.LS_MOCK_SKIP_RULES]: 'sample-rules'
         };
         mockLocalStorage(values);
+        window.eval(script);
+        window.eval(`
+            document.querySelector('.btn').click();
+        `);
+
+        expect(eleMsg.innerHTML).toEqual('...done!');
+        expect(window.localStorage.setItem).toHaveBeenCalledTimes(eles.length);
+
+        const res = {};
+        window.localStorage.setItem.mock.calls.forEach(function(args) {
+             res[args[0]] = args[1];
+        });
+        expect(res).toEqual(values);
+    });
+    it('should save placeholders if no input value', function() {
+        const values = {};
+        eles.forEach(function(el) {
+            values[el.getAttribute('data-key')] = el.getAttribute('placeholder');
+        });
+        mockLocalStorage({});
         window.eval(script);
         window.eval(`
             document.querySelector('.btn').click();

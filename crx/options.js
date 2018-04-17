@@ -17,7 +17,7 @@ var eleMsg = document.querySelector('.msg');
 eleBtn.addEventListener('click', function() {
     var data = {};
     var invalid = eles.some(function(el) {
-        var value = el.value;
+        var value = el.value || el.getAttribute('placeholder');
         switch (el.getAttribute('data-type')) {
         case 'int':
             if (!/[1-9][0-9]*/.test(value)) {
@@ -25,10 +25,9 @@ eleBtn.addEventListener('click', function() {
                 eleMsg.innerHTML = 'Cookie duration requires int.';
                 return true;
             }
-            value = parseInt(value);
             break;
         }
-        data[el.getAttribute('data-key')] = value || el.getAttribute('placeholder');
+        data[el.getAttribute('data-key')] = value;
     });
     if (invalid) return;
 

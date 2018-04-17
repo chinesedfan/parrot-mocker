@@ -34,6 +34,15 @@ describe('background.js', function() {
 
         expectUpdateIcon(true);
     });
+    it('should ignore when received other messages', function() {
+        chrome.runtime.onMessage.trigger({
+            event: 'other-event'
+        });
+
+        // only the init update called
+        assert.calledOnce(chrome.browserAction.setBadgeText);
+        assert.calledOnce(chrome.browserAction.setBadgeBackgroundColor);
+    });
 });
 
 function expectUpdateIcon(active) {

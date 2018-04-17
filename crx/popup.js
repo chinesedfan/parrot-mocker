@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         chrome.tabs.sendMessage(tabs[0].id, {event: 'query-status'}, function(res) {
+            /* istanbul ignore next */
             if (!res) return;
             status.locked = res.locked;
             status.ishttps = res.ishttps;

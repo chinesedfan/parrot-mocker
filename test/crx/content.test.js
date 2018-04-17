@@ -44,6 +44,21 @@ describe('content.js', function() {
             expect(cookies.setItem).toHaveBeenCalledTimes(1);
             expectCookiesSetItem(0, cst.COOKIE_MOCK_ENABLED, '', 'Thu, 01 Jan 1970 00:00:00 GMT');
         });
+        it('should enable and write cookies with default duration', function() {
+            chrome.runtime.onMessage.addListener = stub().callsArgWith(0, {
+                event: 'mode-change',
+                enabled: true,
+                server: 'https://mockserver.com',
+                clientid: 'abcdefgh'
+            });
+            require('../../crx/content');
+
+            const vEnd = 24 * 60 * 60 * 1;
+            expect(cookies.setItem).toHaveBeenCalledTimes(3);
+            expectCookiesSetItem(0, cst.COOKIE_MOCK_ENABLED, cst.COOKIE_MOCK_ENABLED_OK, vEnd);
+            expectCookiesSetItem(1, cst.COOKIE_MOCK_SERVER, 'https://mockserver.com', vEnd);
+            expectCookiesSetItem(2, cst.COOKIE_MOCK_CLIENTID, 'abcdefgh', vEnd);
+        });
         it('should enable, sync local storage and write cookies', function() {
             chrome.runtime.onMessage.addListener = stub().callsArgWith(0, {
                 event: 'mode-change',
