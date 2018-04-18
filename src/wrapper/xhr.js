@@ -1,5 +1,6 @@
 function init(wrapUrl) {
     var xhr = window.XMLHttpRequest;
+    /* istanbul ignore else */
     if (xhr) {
         var open = xhr.prototype.open;
         xhr.prototype.open = function() {
