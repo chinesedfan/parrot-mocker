@@ -5,21 +5,24 @@ function init(wrapUrl) {
         document.createElement = function(tag) {
             var node = createElement.call(document, tag);
             if (tag.toLowerCase() == 'script') {
+                var getValue = function(value) {
+                    return /(\?|\&)callback=/.test(value) ? wrapUrl(value, 'jsonp') : value;
+                };
+
                 var setAttribute = node.setAttribute;
                 node.setAttribute = function(label, value) {
-                    if (label.toLowerCase() == 'src' && /(\?|\&)callback=/.test(value)) {
-                        value = wrapUrl(value, 'jsonp');
+                    if (label.toLowerCase() == 'src') {
+                        value = getValue(value);
                     }
                     setAttribute.call(node, label, value);
                 };
-                Object.defineProperty(node, 'src', {
-                    set: function(value) {
-                        this.setAttribute('src', value);
-                    },
-                    get: function() {
-                        return this.getAttribute('src');
-                    }
-                });
+
+                var desc = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(node), 'src');
+                var setter = desc.set;
+                desc.set = function(value) {
+                    setter.call(this, getValue(value));
+                };
+                Object.defineProperty(node, 'src', desc);
             }
             return node;
         };
