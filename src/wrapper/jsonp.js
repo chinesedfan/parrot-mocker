@@ -1,5 +1,6 @@
 function init(wrapUrl) {
     var createElement = document.createElement;
+    /* istanbul ignore else */
     if (createElement) {
         document.createElement = function(tag) {
             var node = createElement.call(document, tag);
@@ -16,7 +17,7 @@ function init(wrapUrl) {
                         this.setAttribute('src', value);
                     },
                     get: function() {
-                        this.getAttribute('src');
+                        return this.getAttribute('src');
                     }
                 });
             }
