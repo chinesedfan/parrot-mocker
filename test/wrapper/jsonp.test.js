@@ -3,6 +3,7 @@
  */
 
 const { JSDOM } = require('jsdom');
+const { genVar, coverageVar } = require('../util.js');
 const jsonp = require('../../src/wrapper/jsonp.js');
 
 let wrapUrl;
@@ -45,6 +46,9 @@ describe('jsonp', function() {
             const win = dom.window;
             const createElement = win.document.createElement;
             // prepare in sub-jsdom
+            const sourceFileName = Object.keys(window[coverageVar])[0];
+            const cv = genVar(sourceFileName);
+            win[cv] = window[coverageVar][sourceFileName]; // hack
             win.wrapUrl = wrapUrl;
             win.eval(`
                 (${jsonp.init.toString()})(wrapUrl);
