@@ -43,6 +43,7 @@ describe('jsonp', function() {
                 runScripts: 'outside-only'
             });
             const win = dom.window;
+            const createElement = win.document.createElement;
             // prepare in sub-jsdom
             win.wrapUrl = wrapUrl;
             win.eval(`
@@ -51,8 +52,10 @@ describe('jsonp', function() {
                 script.src = 'path';
             `);
 
-            const script = win.script;
+            expect(win.document.createElement).not.toBe(createElement);
             expect(wrapUrl).toHaveBeenCalledTimes(0);
+
+            const script = win.script;
             expect(script.src).toEqual('https://xx.com/path');
             expect(script.getAttribute('src')).toEqual('path');
         });
