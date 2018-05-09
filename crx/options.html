@@ -30,7 +30,8 @@
         }
         .desc {
             margin: 10px 0;
-            color: #999;
+            font-style: italic;
+            color: #777;
         }
         input {
             padding: 5px;
@@ -43,10 +44,19 @@
             outline: none;
         }
         table {
+            margin: -2px;
             line-height: 20px;
         }
         th, td {
             padding: 5px 10px;
+        }
+        th {
+            font-weight: normal;
+            color: #fff;
+            background-color: #f63;
+        }
+        td {
+            background-color: #dee2fe;
         }
         textarea {
             margin-top: 20px;
@@ -99,7 +109,7 @@
 <div class="item"><span class="label">Cookie duration(day):</span><input data-key="__mock_duration" data-type="int" type="text" placeholder="1"></div>
 <div class="item"><span class="label">Ignored rules:</span>
     <span class="desc">requests whose hosts are matched with any rule line will <strong>NOT</strong> be intercepted, i.e.</span>
-    <table border="1"><tbody>
+    <table cellspacing="2"><tbody>
         <tr>
             <th style="width: 90px;">sample rule</th>
             <th style="width: 170px;">matched requests</th>
