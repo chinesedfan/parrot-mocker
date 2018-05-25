@@ -3,7 +3,7 @@ const path = require('path');
 const chrome = require('sinon-chrome');
 const { assert, stub } = require('sinon');
 const { JSDOM } = require('jsdom');
-const { COOKIE_MOCK_CLIENTID } = require('../../src/common/constants');
+const { COOKIE_MOCK_CLIENTID, LS_MOCK_DURATION, LS_MOCK_SKIP_RULES } = require('../../src/common/constants');
 const { coverageVar, instrument } = require('../util.js');
 
 let window;
@@ -153,16 +153,26 @@ describe('popup.js', function() {
             }).callsArgWith(1, {
                 value: 'newclientid'
             });
+            window.localStorage.getItem.mockImplementation(function(key) {
+                switch (key) {
+                case LS_MOCK_DURATION: return 2;
+                case LS_MOCK_SKIP_RULES: return 'blabla';
+                default: return '';
+                }
+            });
             window.eval(script);
             // mock user input
             eleInput.value = 'https://newmock.com';
             simulateBtnClick();
 
             assert.calledOnce(chrome.cookies.get);
+            expect(window.localStorage.getItem).toHaveBeenCalledTimes(2);
             assert.calledWithMatch(chrome.tabs.sendMessage.secondCall, 123, {
                 server: 'https://newmock.com',
                 clientid: 'newclientid',
-                enabled: true
+                enabled: true,
+                duration: 2,
+                skipRules: 'blabla'
             });
             expectEnabledUI('newclientid', 'https://newmock.com');
         });
