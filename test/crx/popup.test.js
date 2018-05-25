@@ -3,7 +3,7 @@ const path = require('path');
 const chrome = require('sinon-chrome');
 const { assert, stub } = require('sinon');
 const { JSDOM } = require('jsdom');
-const { COOKIE_MOCK_CLIENTID, LS_MOCK_DURATION, LS_MOCK_SKIP_RULES } = require('../../src/common/constants');
+const { COOKIE_MOCK_CLIENTID, LS_MOCK_SERVER, LS_MOCK_DURATION, LS_MOCK_SKIP_RULES } = require('../../src/common/constants');
 const { coverageVar, instrument } = require('../util.js');
 
 let window;
@@ -62,6 +62,19 @@ describe('popup.js', function() {
                 enabled: true,
                 clientid: 'abcdefgh',
                 server: 'https://mockserver.com'
+            });
+            window.eval(script);
+
+            expectEnabledUI('abcdefgh', 'https://mockserver.com');
+        });
+        it('should render correctly if is enabled with client id but no server', function() {
+            chrome.tabs.sendMessage.callsArgWith(2, {
+                enabled: true,
+                clientid: 'abcdefgh'
+            });
+            window.localStorage.getItem.mockImplementation(function(key) {
+                if (key === LS_MOCK_SERVER) return 'https://mockserver.com';
+                throw new Error('unexpected key for localStorage.getItem');
             });
             window.eval(script);
 
