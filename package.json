@@ -6,7 +6,8 @@
   "main": "./src/server.js",
   "scripts": {
     "build": "webpack",
-    "prepublish": "npm run build",
+    "zip": "zip -r dist/crx.zip crx",
+    "prepublish": "npm run build && npm run zip",
     "test": "jest",
     "test:coverage": "jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
