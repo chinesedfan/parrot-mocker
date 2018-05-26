@@ -83,6 +83,17 @@ describe('content.js', function() {
             expectCookiesSetItem(1, cst.COOKIE_MOCK_SERVER, 'https://mockserver.com', vEnd);
             expectCookiesSetItem(2, cst.COOKIE_MOCK_CLIENTID, 'abcdefgh', vEnd);
         });
+        it('should not sync local storage if no value', function() {
+            chrome.runtime.onMessage.addListener = stub().callsArgWith(0, {
+                event: 'mode-change',
+                enabled: true,
+                server: 'https://mockserver.com',
+                clientid: 'abcdefgh'
+            });
+            require('../../crx/content');
+
+            expect(global.localStorage.setItem).toHaveBeenCalledTimes(0);
+        });
         it('should reload', function() {
             chrome.runtime.onMessage.addListener = stub().callsArgWith(0, {
                 event: 'mode-change',

@@ -6,8 +6,8 @@ var handlers = {
     'mode-change': function(message) {
         if (message.enabled) {
             // sync info from crx storage to page storage
-            localStorage.setItem(cst.LS_MOCK_DURATION, message.duration);
-            localStorage.setItem(cst.LS_MOCK_SKIP_RULES, message.skipRules);
+            if (message.duration) localStorage.setItem(cst.LS_MOCK_DURATION, message.duration);
+            if (message.skipRules) localStorage.setItem(cst.LS_MOCK_SKIP_RULES, message.skipRules);
 
             writeCookie(cst.COOKIE_MOCK_ENABLED, cst.COOKIE_MOCK_ENABLED_OK);
             writeCookie(cst.COOKIE_MOCK_SERVER, message.server);
