@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
             this.select();
         });
         eleInput.addEventListener('keydown', function(e) {
+            /* istanbul ignore else */
             if (e.keyCode === 13) { // enter
                 eleBtn.click();
             }

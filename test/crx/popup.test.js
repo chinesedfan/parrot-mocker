@@ -121,7 +121,28 @@ describe('popup.js', function() {
             expect(eleBtn.className).toEqual('btn');
         });
     });
-    describe('mock button click', function() {
+    describe('input and settings button', function() {
+        it('should select if focus', function() {
+            eleInput.onselect = jest.fn();
+            window.eval(script);
+            window.eval(`
+                document.getElementById('mockserver').focus();
+            `);
+
+            expect(eleInput.onselect).toHaveBeenCalledTimes(1);
+        });
+        it('should click if enter pressed', function() {
+            eleBtn.click = jest.fn();
+            window.eval(script);
+            window.eval(`
+                var event = new KeyboardEvent('keydown', {
+                    keyCode: 13 // enter
+                });
+                document.getElementById('mockserver').dispatchEvent(event);
+            `);
+
+            expect(eleBtn.click).toHaveBeenCalledTimes(1);
+        });
         it('should open settings page', function() {
             window.eval(script);
             window.eval(`
@@ -130,6 +151,8 @@ describe('popup.js', function() {
 
             assert.calledOnce(chrome.runtime.openOptionsPage);
         });
+    });
+    describe('mock button click', function() {
         it('should ignore if is locked', function() {
             chrome.tabs.sendMessage.callsArgWith(2, {
                 locked: true
