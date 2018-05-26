@@ -37,6 +37,14 @@ document.addEventListener('DOMContentLoaded', function() {
             updateStatus();
         });
 
+        eleInput.addEventListener('focus', function() {
+            this.select();
+        });
+        eleInput.addEventListener('keydown', function(e) {
+            if (e.keyCode === 13) { // enter
+                eleBtn.click();
+            }
+        });
         eleSettings.addEventListener('click', function() {
             chrome.runtime.openOptionsPage();
         });
