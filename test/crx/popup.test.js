@@ -55,7 +55,7 @@ describe('popup.js', function() {
 
             expect(eleMsg.innerHTML).toEqual('Don\'t use at the mocker website!');
             expect(eleBtn.innerHTML).toEqual('Unable to Mock');
-            expect(eleBtn.className).toEqual('btn locked');
+            expect(eleBtn.className).toEqual('btn disabled');
         });
         it('should render correctly if is enabled and has client id', function() {
             chrome.tabs.sendMessage.callsArgWith(2, {

@@ -116,7 +116,7 @@ function updateEleMsg(eleMsg, status) {
 function updateEleBtn(eleBtn, status) {
     if (status.locked) {
         eleBtn.innerHTML = 'Unable to Mock';
-        eleBtn.className = 'btn locked';
+        eleBtn.className = 'btn disabled';
     } else if (status.enabled) {
         eleBtn.innerHTML = 'Click to Stop';
         eleBtn.className = 'btn stop';
