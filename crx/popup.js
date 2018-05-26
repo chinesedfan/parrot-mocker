@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
             status.ishttps = res.ishttps;
             status.enabled = res.enabled;
             status.clientid = res.clientid || '';
-            status.server = decodeURIComponent(res.server || localStorage.getItem(cst.LS_MOCK_SERVER));
+            status.server = decodeURIComponent(res.server || localStorage.getItem(cst.LS_MOCK_SERVER) || '');
 
             updateStatus();
         });

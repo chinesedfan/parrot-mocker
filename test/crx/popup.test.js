@@ -65,7 +65,7 @@ describe('popup.js', function() {
             expect(eleBtn.innerHTML).toEqual('Unable to Mock');
             expect(eleBtn.className).toEqual('btn disabled');
         });
-        it('should render correctly if is enabled and has client id', function() {
+        it('should render correctly if is enabled and has client id and res.server', function() {
             chrome.tabs.sendMessage.callsArgWith(2, {
                 enabled: true,
                 clientid: 'abcdefgh',
@@ -75,7 +75,7 @@ describe('popup.js', function() {
 
             expectEnabledUI('abcdefgh', 'https://mockserver.com');
         });
-        it('should render correctly if is enabled with client id but no server', function() {
+        it('should render correctly if is enabled with client id and localStorage server', function() {
             chrome.tabs.sendMessage.callsArgWith(2, {
                 enabled: true,
                 clientid: 'abcdefgh'
@@ -87,6 +87,15 @@ describe('popup.js', function() {
             window.eval(script);
 
             expectEnabledUI('abcdefgh', 'https://mockserver.com');
+        });
+        it('should render correctly if is enabled with client id but no server', function() {
+            chrome.tabs.sendMessage.callsArgWith(2, {
+                enabled: true,
+                clientid: 'abcdefgh'
+            });
+            window.eval(script);
+
+            expectEnabledUI('abcdefgh', '');
         });
         it('should render correctly if is enabled but no client id', function() {
             chrome.tabs.sendMessage.callsArgWith(2, {
