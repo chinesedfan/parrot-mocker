@@ -26,8 +26,12 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         chrome.tabs.sendMessage(tabs[0].id, {event: 'query-status'}, function(res) {
-            /* istanbul ignore next */
-            if (!res) return;
+            if (!res) {
+                eleMsg.innerHTML = 'No content.js loaded.';
+                updateEleBtn(eleBtn, status);
+                return;
+            }
+
             status.locked = res.locked;
             status.ishttps = res.ishttps;
             status.enabled = res.enabled;

@@ -47,6 +47,14 @@ describe('popup.js', function() {
         assert.calledOnce(chrome.tabs.sendMessage);
     });
     describe('render', function() {
+        it('should render correctly if no content.js loaded', function() {
+            chrome.tabs.sendMessage.callsArgWith(2);
+            window.eval(script);
+
+            expect(eleMsg.innerHTML).toEqual('No content.js loaded.');
+            expect(eleBtn.innerHTML).toEqual('Unable to Mock');
+            expect(eleBtn.className).toEqual('btn disabled');
+        });
         it('should render correctly if is locked', function() {
             chrome.tabs.sendMessage.callsArgWith(2, {
                 locked: true
