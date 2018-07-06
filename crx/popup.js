@@ -2,6 +2,7 @@ var cst = (function(exports) {
     // copy from src/common/constants.js
     exports.LS_MOCK_SERVER = '__mock_server';
     exports.LS_MOCK_DURATION = '__mock_duration';
+    exports.LS_JSONP_PARAM_NAME = '__mock_jsonp_pname';
     exports.LS_MOCK_SKIP_RULES = '__mock_skip_rules';
 
     return exports;
@@ -22,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
             clientid: '',
             server: '',
             duration: 1,
+            jsonpkey: '',
             skipRules: ''
         };
 
@@ -83,6 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 status.clientid = cookie.value;
                 status.enabled = !status.enabled;
                 status.duration = localStorage.getItem(cst.LS_MOCK_DURATION);
+                status.jsonpkey = localStorage.getItem(cst.LS_JSONP_PARAM_NAME);
                 status.skipRules = localStorage.getItem(cst.LS_MOCK_SKIP_RULES);
 
                 chrome.tabs.sendMessage(tabs[0].id, status);

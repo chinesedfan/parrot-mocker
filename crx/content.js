@@ -7,6 +7,7 @@ var handlers = {
         if (message.enabled) {
             // sync info from crx storage to page storage
             if (message.duration) localStorage.setItem(cst.LS_MOCK_DURATION, message.duration);
+            if (message.jsonpkey) localStorage.setItem(cst.LS_JSONP_PARAM_NAME, message.jsonpkey);
             if (message.skipRules) localStorage.setItem(cst.LS_MOCK_SKIP_RULES, message.skipRules);
 
             writeCookie(cst.COOKIE_MOCK_ENABLED, cst.COOKIE_MOCK_ENABLED_OK);

@@ -109,6 +109,7 @@ describe('options.js', function() {
         const values = {
             [cst.LS_MOCK_SERVER]: 'http://mockserver.com',
             [cst.LS_MOCK_DURATION]: '123',
+            [cst.LS_JSONP_PARAM_NAME]: 'cb',
             [cst.LS_MOCK_SKIP_RULES]: 'sample-rules'
         };
         mockLocalStorage(values);

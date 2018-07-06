@@ -7,6 +7,7 @@ exports.COOKIE_MOCK_CLIENTID = '__mock_clientid';
 exports.COOKIE_MOCK_DEBUG = '__mock_debug';
 
 exports.LS_MOCK_SERVER = '__mock_server';
+exports.LS_JSONP_PARAM_NAME = '__mock_jsonp_pname';
 exports.LS_MOCK_DURATION = '__mock_duration';
 exports.LS_MOCK_SKIP_RULES = '__mock_skip_rules';
 

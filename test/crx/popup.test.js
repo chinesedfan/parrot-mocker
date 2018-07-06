@@ -3,7 +3,8 @@ const path = require('path');
 const chrome = require('sinon-chrome');
 const { assert, stub } = require('sinon');
 const { JSDOM } = require('jsdom');
-const { COOKIE_MOCK_CLIENTID, LS_MOCK_SERVER, LS_MOCK_DURATION, LS_MOCK_SKIP_RULES } = require('../../src/common/constants');
+const { COOKIE_MOCK_CLIENTID, LS_MOCK_SERVER, LS_MOCK_DURATION,
+    LS_JSONP_PARAM_NAME, LS_MOCK_SKIP_RULES } = require('../../src/common/constants');
 const { coverageVar, instrument } = require('../util.js');
 
 let window;
@@ -209,6 +210,7 @@ describe('popup.js', function() {
             window.localStorage.getItem.mockImplementation(function(key) {
                 switch (key) {
                 case LS_MOCK_DURATION: return 2;
+                case LS_JSONP_PARAM_NAME: return 'cb';
                 case LS_MOCK_SKIP_RULES: return 'blabla';
                 default: return '';
                 }
@@ -219,12 +221,13 @@ describe('popup.js', function() {
             simulateBtnClick();
 
             assert.calledOnce(chrome.cookies.get);
-            expect(window.localStorage.getItem).toHaveBeenCalledTimes(2);
+            expect(window.localStorage.getItem).toHaveBeenCalledTimes(3);
             assert.calledWithMatch(chrome.tabs.sendMessage.secondCall, 123, {
                 server: 'https://newmock.com',
                 clientid: 'newclientid',
                 enabled: true,
                 duration: 2,
+                jsonpkey: 'cb',
                 skipRules: 'blabla'
             });
             expectEnabledUI('newclientid', 'https://newmock.com');

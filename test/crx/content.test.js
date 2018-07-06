@@ -66,14 +66,16 @@ describe('content.js', function() {
                 server: 'https://mockserver.com',
                 clientid: 'abcdefgh',
                 duration: '2',
+                jsonpkey: 'cb',
                 skipRules: 'rules'
             });
             global.localStorage.getItem.mockReturnValue('3'); // different value
             require('../../crx/content');
 
-            expect(global.localStorage.setItem).toHaveBeenCalledTimes(2);
+            expect(global.localStorage.setItem).toHaveBeenCalledTimes(3);
             expect(global.localStorage.setItem.mock.calls[0]).toEqual([cst.LS_MOCK_DURATION, '2']);
-            expect(global.localStorage.setItem.mock.calls[1]).toEqual([cst.LS_MOCK_SKIP_RULES, 'rules']);
+            expect(global.localStorage.setItem.mock.calls[1]).toEqual([cst.LS_JSONP_PARAM_NAME, 'cb']);
+            expect(global.localStorage.setItem.mock.calls[2]).toEqual([cst.LS_MOCK_SKIP_RULES, 'rules']);
             expect(global.localStorage.getItem).toHaveBeenCalledTimes(3);
             expect(global.localStorage.getItem.mock.calls).toEqual(Array(3).fill([cst.LS_MOCK_DURATION]));
 
