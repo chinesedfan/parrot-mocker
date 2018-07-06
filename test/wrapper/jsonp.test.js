@@ -48,9 +48,12 @@ describe('jsonp', function() {
             const win = dom.window;
             const createElement = win.document.createElement;
             // prepare in sub-jsdom
-            const sourceFileName = Object.keys(window[coverageVar])[0];
-            const cv = genVar(sourceFileName);
-            win[cv] = window[coverageVar][sourceFileName]; // hack
+            if (window[coverageVar]) {
+                // hack
+                const sourceFileName = Object.keys(window[coverageVar])[0];
+                const cv = genVar(sourceFileName);
+                win[cv] = window[coverageVar][sourceFileName];
+            }
             win.wrapUrl = wrapUrl;
             win.eval(`
                 (${jsonp.init.toString()})(wrapUrl);
