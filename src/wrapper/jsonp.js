@@ -1,12 +1,13 @@
-function init(wrapUrl) {
+function init(wrapUrl, jsonpKey) {
     var createElement = document.createElement;
+    var reg = new RegExp('(\\?|&)(' + (jsonpKey || 'callback|jsonp') + ')=');
     /* istanbul ignore else */
     if (createElement) {
         document.createElement = function(tag) {
             var node = createElement.call(document, tag);
             if (tag.toLowerCase() == 'script') {
                 var getValue = function(value) {
-                    return /(\?|\&)callback=/.test(value) ? wrapUrl(value, 'jsonp') : value;
+                    return reg.test(value) ? wrapUrl(value, 'jsonp') : value;
                 };
 
                 var setAttribute = node.setAttribute;

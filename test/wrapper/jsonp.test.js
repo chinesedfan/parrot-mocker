@@ -8,9 +8,11 @@ const jsonp = require('../../src/wrapper/jsonp.js');
 
 let wrapUrl;
 describe('jsonp', function() {
+    const originCreateElement = document.createElement;
+
     beforeAll(function() {
         wrapUrl = jest.fn().mockReturnValue('yy.com');
-        jsonp.init(wrapUrl);
+        jsonp.init(wrapUrl, /* 'callback|jsonp' */);
     });
     beforeEach(function() {
         wrapUrl.mockClear();
@@ -79,5 +81,25 @@ describe('jsonp', function() {
         expect(wrapUrl).toHaveBeenCalledTimes(1);
         expect(wrapUrl).toHaveBeenCalledWith('xx.com?callback=jsonpcb', 'jsonp');
         expect(script.getAttribute('src')).toEqual('yy.com');
+    });
+    it('should call wrapUrl when another default jsonpKey was used', function() {
+        const script = document.createElement('script');
+        script.src = 'xx.com?jsonp=jsonpcb';
+
+        expect(wrapUrl).toHaveBeenCalledTimes(1);
+        expect(wrapUrl).toHaveBeenCalledWith('xx.com?jsonp=jsonpcb', 'jsonp');
+        expect(script.src).toEqual('yy.com');
+    });
+    it('should call wrapUrl when another jsonpKey was set', function() {
+        // reset in the last test
+        document.createElement = originCreateElement;
+        jsonp.init(wrapUrl, 'cb');
+
+        const script = document.createElement('script');
+        script.src = 'xx.com?cb=jsonpcb';
+
+        expect(wrapUrl).toHaveBeenCalledTimes(1);
+        expect(wrapUrl).toHaveBeenCalledWith('xx.com?cb=jsonpcb', 'jsonp');
+        expect(script.src).toEqual('yy.com');
     });
 });
