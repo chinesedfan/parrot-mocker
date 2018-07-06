@@ -54,10 +54,15 @@ describe('browser', function() {
             hostname: 'yy.com'
         };
 
+        global.localStorage.getItem.mockReturnValue('cb');
+        global.localStorage.getItem.mockClear();
         require('../src/browser');
 
         expect(fetch.init).toHaveBeenCalledWith(global.window);
         expect(xhr.init.mock.calls[0][0]).toBe(jsonp.init.mock.calls[0][0]);
+        expect(jsonp.init.mock.calls[0][1]).toBe('cb');
+        expect(global.localStorage.getItem).toHaveBeenCalledTimes(1 + 3); // enable and writeCookies
+        expect(global.localStorage.getItem.mock.calls[0][0]).toEqual(cst.LS_JSONP_PARAM_NAME);
 
         // manual called
         const wrapUrl = xhr.init.mock.calls[0][0];

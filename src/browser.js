@@ -30,7 +30,7 @@ var jsonp = require('./wrapper/jsonp.js');
 function enableIntercept() {
     fetch.init(window);
     xhr.init(wrapUrl);
-    jsonp.init(wrapUrl);
+    jsonp.init(wrapUrl, localStorage.getItem(cst.LS_JSONP_PARAM_NAME));
 }
 
 function wrapUrl(urlStr, reqType) {
