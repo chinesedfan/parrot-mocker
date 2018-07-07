@@ -18,6 +18,8 @@ function init(wrapUrl, jsonpKey) {
                     setAttribute.call(node, label, value);
                 };
 
+                // don't afraid that `node.prototype` is changed
+                // because `desc` is just a copy
                 var desc = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(node), 'src');
                 var setter = desc.set;
                 desc.set = function(value) {

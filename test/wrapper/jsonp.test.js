@@ -46,7 +46,7 @@ describe('jsonp', function() {
                 runScripts: 'outside-only'
             });
             const win = dom.window;
-            const createElement = win.document.createElement;
+            win.oldCreateElement = win.document.createElement;
             // prepare in sub-jsdom
             if (window[coverageVar]) {
                 // hack
@@ -58,15 +58,21 @@ describe('jsonp', function() {
             win.eval(`
                 (${jsonp.init.toString()})(wrapUrl);
                 window.script = document.createElement('script');
-                script.src = 'path';
+                script.src = 'path'; // do nothing
+
+                window.script2 = oldCreateElement.call(document, 'script');
+                script2.src = 'path2?callback=1'; // also do nothing
             `);
 
-            expect(win.document.createElement).not.toBe(createElement);
+            expect(win.document.createElement).not.toBe(win.oldCreateElement);
             expect(wrapUrl).toHaveBeenCalledTimes(0);
 
             const script = win.script;
             expect(script.src).toEqual('https://xx.com/path');
             expect(script.getAttribute('src')).toEqual('path');
+            const script2 = win.script2;
+            expect(script2.src).toEqual('https://xx.com/path2?callback=1');
+            expect(script2.getAttribute('src')).toEqual('path2?callback=1');
         });
     });
     it('should call wrapUrl in script.src.setter', function() {
