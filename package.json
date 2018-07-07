@@ -5,7 +5,7 @@
   "browser": "./dist/parrot.js",
   "main": "./src/server.js",
   "scripts": {
-    "build": "webpack",
+    "build": "sh build.sh",
     "zip": "zip -r dist/crx.zip crx",
     "prepublish": "npm run build && npm run zip",
     "test": "jest",
