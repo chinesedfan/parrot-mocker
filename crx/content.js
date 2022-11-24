@@ -50,7 +50,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 });
 
 var script = document.createElement('script');
-script.innerHTML = parrot;
+script.src = chrome.runtime.getURL('build/parrot.js');
 document.documentElement.appendChild(script);
 
 setTimeout(function() {
